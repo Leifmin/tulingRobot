@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>tulin</title>
+	<link rel="stylesheet" type="text/css" href="./css/base.css">
+	<style type="text/css">
+		
+		header {
+			color:white;
+			background: blue;
+			text-align: center;
+			font-weight: bold;
+			font-size: 1.4rem;
+			padding:0.4rem 0; 
+			position: fixed;
+			top: 0;
+			width: 100%;
+		}
+		#footer {
+			border-top: 1px solid #000;
+			position: fixed;
+			bottom:0;
+			width: 100%;
+			padding: 5px 10px;
+		}
+		#text {
+			width: 70%;
+			height: 30px;
+			border:1px solid #000;
+		}
+		#btn {
+			width: 20%;
+			height: 30px;
+			font-size: 20px;
+			float: right;
+			margin-right: 17px;
+			margin-top: 2px;
+			background-color: blue;
+			color:white;
+		}
+		#content {
+			position: fixed;
+			bottom: 45px;
+			width: 100%;
+			font-size: 20px;
+		}
+		#godlist {
+			padding: 5%;
+			width: 90%;
+		}
+		#godlist li {
+			width: 100%;
+		}
+		#godlist .computside {
+			background-color: #aaaabc;
+		}
+		#godlist .comput {
+
+		}
+		#godlist .me {
+			text-align: right;
+		}
+		#godlist .meside {
+			background-color: #aaaabc;
+			text-align: right;
+			float: right;
+			
+		}
+	</style>
+</head>
+<body>
+	<header>
+		图灵聊天机器人
+	</header>
+	<content id="content">
+		<ul id="godlist">
+			
+		</ul>
+	</content>
+	<div id="footer">
+		<input type="text" id="text"><button id="btn">发送</button>
+	</div>
+	<script type="text/javascript" src="./js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript">
+		$("#btn").on("click",function(){
+			var li = $("<li />",{
+			});
+			$("<p />",{
+				class:"me",
+				text:"我说",
+			}).appendTo(li);
+			$("<span />",{
+				class:"meside",
+				text:$("#text").val()
+			}).appendTo(li);
+			li.appendTo($("#godlist"));
+			$.ajax({
+				type:"POST",
+				url:"http://www.tuling123.com/openapi/api",
+				data:{
+					key:"d2bc6b6550174e699ce8596c05574032",
+					info:$("#text").val()
+				},
+				success:function(res){
+					console.log(res);
+					var li2 = $("<li />");
+					$("<p />",{
+					class:"comput",
+					text:"嗦嗨说",
+					}).appendTo(li2);
+					$("<span />",{
+						class:"computside",
+						text:res.text,
+					}).appendTo(li2);
+					li2.appendTo($("#godlist"));
+					$("#text").val("");
+				}
+			})
+		})
+	</script>
+</body>
+</html>
